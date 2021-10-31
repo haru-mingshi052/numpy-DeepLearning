@@ -5,8 +5,8 @@ import numpy as np
 import cupy as cp
 import time
 
-from processing import mnist_dataset
-from dnn import DNN
+from .processing import mnist_dataset
+from .dnn import DNN
 from optimizer import SGD
 from loss import SoftmaxWithLoss
 
