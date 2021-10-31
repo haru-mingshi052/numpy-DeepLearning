@@ -4,7 +4,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import cupy as cp
 
 from utility import Layer
-from activations.functions import softmax
+from activation.functions import softmax
 from .functions import cross_entropy_error
 
 class SoftmaxWithLoss(Layer):
