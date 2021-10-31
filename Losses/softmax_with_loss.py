@@ -1,8 +1,11 @@
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 import cupy as cp
 
-from ..Utility.abstract_layer import Layer
-from ..Activations.functions import softmax
-from ..function import cross_entropy_error
+from utility import Layer
+from activations.functions import softmax
+from .functions import cross_entropy_error
 
 class SoftmaxWithLoss(Layer):
     def __init__(self):

@@ -1,7 +1,10 @@
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 import cupy as cp
 
-from ..Utility.abstract_layer import Layer
-from ..function import binary_cross_entropy
+from utility import Layer
+from .functions import binary_cross_entropy
 
 class BCELoss(Layer):
     def __init__(self):

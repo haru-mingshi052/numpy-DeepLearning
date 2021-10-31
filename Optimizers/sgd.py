@@ -1,10 +1,8 @@
-#==========================================
-# SGD
-#==========================================
-class SGD:
-    def __init__(self, lr):
-        self.lr = lr
-        self.update_params = {'weight': 'dw', 'bias': 'db', 'gamma': 'dgamma', 'beta': 'dbeta'}
+from .abstract_optimizer import Optimizer
+
+class SGD(Optimizer):
+    def __init__(self, lr, update_params=None):
+        super().__init__(lr, update_params)
 
     def update(self, layers_dict):
         for layer in layers_dict.values():
