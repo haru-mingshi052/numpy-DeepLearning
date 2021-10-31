@@ -4,21 +4,13 @@
 class SGD:
     def __init__(self, lr):
         self.lr = lr
-        
+        self.update_params = {'weight': 'dw', 'bias': 'db', 'gamma': 'dgamma', 'beta': 'dbeta'}
+
     def update(self, layers_dict):
         for layer in layers_dict.values():
-            # weightの更新
-            if hasattr(layer, 'weight'):
-                layer.weight -= self.lr * layer.dw
-               
-            # biasの更新
-            if hasattr(layer, 'bias'):
-                layer.bias -= self.lr * layer.db
-
-            # gammaの更新
-            if hasattr(layer, 'gamma'):
-              layer.gamma -= self.lr * layer.dgamma
-
-            # betaの更新
-            if hasattr(layer, 'beta'):
-              layer.beta -= self.lr * layer.dbeta
+            for key, value in self.update_params.items():
+                if hasattr(layer, key):
+                    param = getattr(layer, key)
+                    gradient = getattr(layer, value)
+                    param -= self.lr * gradient
+                    setattr(layer, key, param)
