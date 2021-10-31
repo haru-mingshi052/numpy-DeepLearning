@@ -7,8 +7,8 @@ import time
 
 from processing import mnist_dataset
 from dnn import DNN
-from optimizers import SGD
-from losses import SoftmaxWithLoss
+from optimizer import SGD
+from loss import SoftmaxWithLoss
 
 import argparse
 

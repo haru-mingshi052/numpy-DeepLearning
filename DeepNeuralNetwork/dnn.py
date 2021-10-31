@@ -3,8 +3,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from collections import OrderedDict
 
-from layers import Affine
-from activations import Relu
+from layer import Affine
+from activation import Relu
 from batch_normalization import BatchNorm1d
 from dropout import Dropout
 
