@@ -6,6 +6,8 @@ class Optimizer:
         self.lr = lr
         if update_params==None:
             self.update_params = {'weight': 'dw', 'bias': 'db', 'gamma': 'dgamma', 'beta': 'dbeta'}
+        else:
+            self.update_params=update_params
 
     def forward(self, layers_dict):
         raise NotImplementedError
