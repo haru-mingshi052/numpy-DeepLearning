@@ -21,6 +21,8 @@ parser.add_argument("--epochs", default=300, type=int,
                     help="学習を何エポック回すか")
 parser.add_argument("--es_patience", default=20, type=int,
                     help="何エポックスコアの改善が無かった時に学習を止めるか")
+parser.add_argument("--learning_rate", default=1e-3, type=float,
+                    help="optimizerの学習率")
 parser.add_argument("--seed", default=71, type=int,
                     help='シード値')
 
@@ -29,12 +31,12 @@ args = parser.parse_args()
 import warnings
 warnings.filterwarnings('ignore')
 
-# layer_sizeの先頭と終わりに層の大きさを追加
-args.layer_size.insert(0, x_train.shape[1])
-args.layer_size.append(y_train.shape[1])
-
 if __name__ == "__main__":
     x_train, x_test, y_train, y_test = mnist_dataset()
+    # layer_sizeの先頭と終わりに層の大きさを追加
+    args.layer_size.insert(0, x_train.shape[1])
+    args.layer_size.append(y_train.shape[1])
+
     trainer = TrainModel(
         model=DNN(layer_size=args.layer_size),
         loss_layer=SoftmaxWithLoss(),

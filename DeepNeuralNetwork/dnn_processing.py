@@ -11,7 +11,7 @@ class DnnBatchDataset(BaseBatchDataset):
     """
     Dnn用のバッチデータセット
     """
-    def batch_choice():
+    def batch_choice(self):
         x_batch = self.feature[self.batch_mask]
         y_batch = self.target[self.batch_mask]
 
