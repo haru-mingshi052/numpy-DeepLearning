@@ -11,8 +11,9 @@ class BatchNorm2d(BaseBatchNormalization):
         x = x.reshape(N, -1)
         
         out = self.forward_(x, train)
+        out = out.reshape(*self.input_shape)
         
-        return out.reshape(*self.input_shape)
+        return out
     
     
     def backward(self, dout):
@@ -20,5 +21,6 @@ class BatchNorm2d(BaseBatchNormalization):
         dout = dout.reshape(N, -1)
         
         dx = self.backward_(dout)
+        dx = dx.reshape(*self.input_shape)
         
-        return dx.reshape(*self.input_shape)
+        return dx

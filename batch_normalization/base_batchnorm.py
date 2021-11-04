@@ -33,11 +33,11 @@ class BaseBatchNormalization(Layer):
             self.running_var = cp.zeros(D)
             
         if train:
-            mu = x.mean(axis = 0) # 平均 μ
+            mu = x.mean(axis=0) # 平均 μ
             xc = x - mu
-            var = cp.mean(xc**2, axis = 0) # 分散 σ^2
-            std = cp.sqrt(var + 1e-6) # 標準偏差 σ
-            xn = xc / (std + 1e-5)
+            var = cp.mean(xc**2, axis=0) # 分散 σ^2
+            std = cp.sqrt(var + 1e-5) # 標準偏差 σ
+            xn = xc / std
             
             self.batch_size = x.shape[0]
             self.xc = xc
@@ -53,8 +53,8 @@ class BaseBatchNormalization(Layer):
         return self.gamma * xn + self.beta
 
     def backward_(self, dout):
-        dbeta = dout.sum(axis = 0)
-        dgamma = cp.sum(self.xn * dout, axis = 0)
+        dbeta = dout.sum(axis=0)
+        dgamma = cp.sum(self.xn * dout, axis=0)
         dxn = self.gamma * dout
         dxc = dxn / self.std
         dstd = -cp.sum((dxn * self.xc) / (self.std * self.std), axis=0)
