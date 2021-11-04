@@ -10,8 +10,8 @@ from utility import Layer
 #===========================================
 class Affine(Layer):
     def __init__(self, input_size, output_size):
-        self.weight = cp.random.randn(input_size, output_size)
-        self.bias = cp.random.randn(output_size)
+        self.weight = cp.random.randn(input_size, output_size) * 0.01
+        self.bias = cp.random.randn(output_size) * 0.01
 
         self.x = None
         self.dw = None
