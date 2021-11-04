@@ -9,8 +9,3 @@ class BasePooling(Layer):
         self.filter_w = filter_w # filter width
         self.stride = stride # ストライド
         self.padding = padding # パディング  
-
-        self.N = None # batch_size
-        self.C = None # channel
-        self.OH = None # out height
-        self.OW = None # out width

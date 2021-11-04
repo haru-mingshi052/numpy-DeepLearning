@@ -10,6 +10,12 @@ from utility import im2col, col2im
 class AveragePooling2d(BasePooling):
     def __init__(self, filter_h, filter_w, stride, padding):
         super().__init__(filter_h, filter_w, stride, padding)  
+
+        # backward時に使用
+        self.N = None # batch_size
+        self.C = None # channel
+        self.OH = None # out height
+        self.OW = None # out width
         
     def forward(self, x):
         self.N, self.C, H, W = x.shape
@@ -21,7 +27,7 @@ class AveragePooling2d(BasePooling):
         col = im2col(x, self.filter_h, self.filter_w, self.stride, self.padding)
         col = col.reshape(-1, self.filter_h * self.filter_w)
         
-        out = cp.mean(col, axis = 1).reshape(self.N, self.OH, self.OW, self.C).transpose(0, 3, 1, 2)
+        out = cp.mean(col, axis=1).reshape(self.N, self.OH, self.OW, self.C).transpose(0, 3, 1, 2)
         out = out.reshape(self.N, -1)
         
         self.x = x # 入力を変数として保持
