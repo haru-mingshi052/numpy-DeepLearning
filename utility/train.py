@@ -27,17 +27,15 @@ class TrainModel:
         print("==========start==========")
         for epoch in range(self.epochs+1):
             start_time = time.time()
-            train_loss = 0.0
-            val_loss = 0.0
         
             # train
-            train_loss = self.loop(
+            train_loss = self.epoch_loop(
                 ds=self.train_ds,
                 train_flg=True
             )
             
             # eval
-            val_loss = self.loop(
+            val_loss = self.epoch_loop(
                 ds=self.val_ds,
                 train_flg=False
             )
@@ -54,17 +52,18 @@ class TrainModel:
             
             if val_loss < best_loss:
                 best_loss = val_loss
+                best_train_loss = train_loss
                 best_epoch = epoch
                 patience = self.es_patience
             else:
                 patience -= 1
         
             if patience == 0:
-                print("Early Stopping | Epochs：{:03} | Best Loss：{:.7f}"
-                    .format(best_epoch, best_loss))
+                print("Early Stopping | Epochs：{:03} | Train Loss：{:.5f} | Best Loss：{:.5f}"
+                    .format(best_epoch, best_train_loss, best_loss))
                 break
 
-    def loop(self, ds, train_flg):
+    def epoch_loop(self, ds, train_flg):
         epoch_loss = 0.0
         for iter_num in range(ds.iter_nums):
             x, y = ds.__getitem__()
@@ -81,7 +80,7 @@ class TrainModel:
 
             if train_flg:
                 # 逆伝播
-                dx = self.loss_layer.backward(dout = 1)
+                dx = self.loss_layer.backward(dout=1)
                 self.model.backward(dx)
                 
                 self.optimizer.update(self.model.layers) # パラメータの更新
