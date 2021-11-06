@@ -9,5 +9,14 @@ class Optimizer:
         else:
             self.update_params=update_params
 
-    def forward(self, layers_dict):
-        raise NotImplementedError
+    def update(self, layers_dict):
+        for layer in layers_dict.values():
+            for key, value in self.update_params.items():
+                if hasattr(layer, key):
+                    param = getattr(layer, key)
+                    gradient = getattr(layer, value)
+                    new_param = expression(lr, param, gradient)
+                    setattr(layer, key, new_param)
+
+    def expression(self, lr, param, gradient):
+        raise NotImplementedError()
